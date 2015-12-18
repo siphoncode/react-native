@@ -51,11 +51,19 @@ var Geolocation = {
       typeof geo_success === 'function',
       'Must provide a valid geo_success callback.'
     );
-    RCTLocationObserver.getCurrentPosition(
-      geo_options || {},
-      geo_success,
-      geo_error || logError
-    );
+    warning('getCurrentPosition(): Geolocation always returns fake GPS coordinates in the Siphon Sandbox.');
+    geo_success({
+      coords: {
+        latitude: 51.500152,
+        longitude: -0.126236,
+        altitude: 55,
+        accuracy: 10,
+        altitudeAccuracy: 10,
+        heading: 0,
+        speed: 0
+      },
+      timestamp: 1301839909995
+    });
   },
 
   /*
@@ -64,20 +72,26 @@ var Geolocation = {
    */
   watchPosition: function(success: Function, error?: Function, options?: GeoOptions): number {
     if (!updatesEnabled) {
-      RCTLocationObserver.startObserving(options || {});
+      //RCTLocationObserver.startObserving(options || {});
       updatesEnabled = true;
     }
     var watchID = subscriptions.length;
-    subscriptions.push([
-      RCTDeviceEventEmitter.addListener(
-        'geolocationDidChange',
-        success
-      ),
-      error ? RCTDeviceEventEmitter.addListener(
-        'geolocationError',
-        error
-      ) : null,
-    ]);
+    subscriptions.push([null, null]);
+    warning('watchPosition(): Geolocation always returns fake GPS coordinates in the Siphon Sandbox.');
+    setTimeout(function() {
+      success({
+        coords: {
+          latitude: 51.500152,
+          longitude: -0.126236,
+          altitude: 55,
+          accuracy: 10,
+          altitudeAccuracy: 10,
+          heading: 0,
+          speed: 0
+        },
+        timestamp: 1301839909995
+      });
+    }, 50);
     return watchID;
   },
 
@@ -106,7 +120,7 @@ var Geolocation = {
 
   stopObserving: function() {
     if (updatesEnabled) {
-      RCTLocationObserver.stopObserving();
+      //RCTLocationObserver.stopObserving();
       updatesEnabled = false;
       for (var ii = 0; ii < subscriptions.length; ii++) {
         var sub = subscriptions[ii];
