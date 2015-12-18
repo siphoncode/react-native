@@ -18,6 +18,7 @@ var createStrictShapeTypeChecker = require('createStrictShapeTypeChecker');
 var deepFreezeAndThrowOnMutationInDev =
   require('deepFreezeAndThrowOnMutationInDev');
 var invariant = require('invariant');
+var warning = require('warning');
 
 var GROUP_TYPES_OPTIONS = [
   'Album',
@@ -133,18 +134,7 @@ class CameraRoll {
    * @param errorCallback Invoked with error message on error.
    */
   static saveImageWithTag(tag, successCallback, errorCallback) {
-    invariant(
-      typeof tag === 'string',
-      'CameraRoll.saveImageWithTag tag must be a valid string.'
-    );
-    RCTCameraRollManager.saveImageWithTag(
-      tag,
-      (imageTag) => {
-        successCallback && successCallback(imageTag);
-      },
-      (errorMessage) => {
-        errorCallback && errorCallback(errorMessage);
-      });
+    warning('saveImageWithTag() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -157,29 +147,7 @@ class CameraRoll {
    *  @param {function} errorCallback Invoked with error message on error.
    */
   static getPhotos(params, callback, errorCallback) {
-    var metaCallback = callback;
-    if (__DEV__) {
-      getPhotosParamChecker({params}, 'params', 'CameraRoll.getPhotos');
-      invariant(
-        typeof callback === 'function',
-        'CameraRoll.getPhotos callback must be a valid function.'
-      );
-      invariant(
-        typeof errorCallback === 'function',
-        'CameraRoll.getPhotos errorCallback must be a valid function.'
-      );
-    }
-    if (__DEV__) {
-      metaCallback = (response) => {
-        getPhotosReturnChecker(
-          {response},
-          'response',
-          'CameraRoll.getPhotos callback'
-        );
-        callback(response);
-      };
-    }
-    RCTCameraRollManager.getPhotos(params, metaCallback, errorCallback);
+    warning('getPhotos() is disabled in the Siphon Sandbox.');
   }
 }
 
