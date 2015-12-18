@@ -15,6 +15,7 @@ var Map = require('Map');
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var RCTPushNotificationManager = require('NativeModules').PushNotificationManager;
 var invariant = require('invariant');
+var warning = require('warning');
 
 var _notifHandlers = new Map();
 var _initialNotification = RCTPushNotificationManager &&
@@ -79,21 +80,21 @@ class PushNotificationIOS {
    *
    */
   static scheduleLocalNotification(details: Object) {
-    RCTPushNotificationManager.scheduleLocalNotification(details);
+    warning('scheduleLocalNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Cancels all scheduled localNotifications
    */
   static cancelAllLocalNotifications() {
-    RCTPushNotificationManager.cancelAllLocalNotifications();
+    warning('cancelAllLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Sets the badge number for the app icon on the home screen
    */
   static setApplicationIconBadgeNumber(number: number) {
-    RCTPushNotificationManager.setApplicationIconBadgeNumber(number);
+    warning('setApplicationIconBadgeNumber() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -119,23 +120,7 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register',
       'PushNotificationIOS only supports `notification` and `register` events'
     );
-    var listener;
-    if (type === 'notification') {
-      listener =  RCTDeviceEventEmitter.addListener(
-        DEVICE_NOTIF_EVENT,
-        (notifData) => {
-          handler(new PushNotificationIOS(notifData));
-        }
-      );
-    } else if (type === 'register') {
-      listener = RCTDeviceEventEmitter.addListener(
-        NOTIF_REGISTER_EVENT,
-        (registrationInfo) => {
-          handler(registrationInfo.deviceToken);
-        }
-      );
-    }
-    _notifHandlers.set(handler, listener);
+    warning('addEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -171,7 +156,7 @@ class PushNotificationIOS {
         sound: true
       };
     }
-    RCTPushNotificationManager.requestPermissions(requestedPermissions);
+    warning('requestPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -183,7 +168,7 @@ class PushNotificationIOS {
    * the Settings app. Apps unregistered through this method can always re-register.
    */
   static abandonPermissions() {
-    RCTPushNotificationManager.abandonPermissions();
+    warning('abandonPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -199,7 +184,7 @@ class PushNotificationIOS {
       typeof callback === 'function',
       'Must provide a valid callback'
     );
-    RCTPushNotificationManager.checkPermissions(callback);
+    warning('checkPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -211,12 +196,7 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register',
       'PushNotificationIOS only supports `notification` and `register` events'
     );
-    var listener = _notifHandlers.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _notifHandlers.delete(handler);
+    warning('removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
 
@@ -228,10 +208,7 @@ class PushNotificationIOS {
    * notification object, or `null`. Subsequent invocations will return null.
    */
   static popInitialNotification() {
-    var initialNotification = _initialNotification &&
-      new PushNotificationIOS(_initialNotification);
-    _initialNotification = null;
-    return initialNotification;
+    warning('popInitialNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
