@@ -15,6 +15,7 @@ var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var RCTLinkingManager = require('NativeModules').LinkingManager;
 var Map = require('Map');
 var invariant = require('invariant');
+var warning = require('warning');
 
 var _notifHandlers = new Map();
 var _initialURL = RCTLinkingManager &&
@@ -92,11 +93,7 @@ class LinkingIOS {
       type === 'url',
       'LinkingIOS only supports `url` events'
     );
-    var listener = RCTDeviceEventEmitter.addListener(
-      DEVICE_NOTIF_EVENT,
-      handler
-    );
-    _notifHandlers.set(handler, listener);
+    warning('addEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -107,12 +104,7 @@ class LinkingIOS {
       type === 'url',
       'LinkingIOS only supports `url` events'
     );
-    var listener = _notifHandlers.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _notifHandlers.delete(handler);
+    warning('removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -130,7 +122,7 @@ class LinkingIOS {
    * Determine whether or not an installed app can handle a given `url`
    * The callback function will be called with `bool supported` as the only argument
    *
-   * NOTE: As of iOS 9, your app needs to provide a `LSApplicationQueriesSchemes` key 
+   * NOTE: As of iOS 9, your app needs to provide a `LSApplicationQueriesSchemes` key
    * inside `Info.plist`.
    */
   static canOpenURL(url: string, callback: Function) {
