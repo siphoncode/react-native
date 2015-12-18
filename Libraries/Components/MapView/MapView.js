@@ -11,6 +11,8 @@
  */
 'use strict';
 
+var warning = require('warning');
+
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var Platform = require('Platform');
@@ -253,6 +255,10 @@ var MapView = React.createClass({
   },
 
   render: function() {
+    if (this.props.showsUserLocation) {
+      warning('MapView.showsUserLocation is disabled in the Siphon Sandbox.');
+      this.props.showsUserLocation = false;
+    }
     return <RCTMap {...this.props} onPress={this._onPress} onChange={this._onChange} />;
   },
 });
