@@ -120,7 +120,7 @@ class CameraRoll {
    * Saves the image to the camera roll / gallery.
    *
    * The CameraRoll API is not yet implemented for Android.
-   * 
+   *
    * @param {string} tag On Android, this is a local URI, such
    * as `"file:///sdcard/img.png"`.
    *
@@ -135,18 +135,7 @@ class CameraRoll {
    * @param errorCallback Invoked with error message on error.
    */
   static saveImageWithTag(tag, successCallback, errorCallback) {
-    invariant(
-      typeof tag === 'string',
-      'CameraRoll.saveImageWithTag tag must be a valid string.'
-    );
-    RCTCameraRollManager.saveImageWithTag(
-      tag,
-      (imageTag) => {
-        successCallback && successCallback(imageTag);
-      },
-      (errorMessage) => {
-        errorCallback && errorCallback(errorMessage);
-      });
+    console.log('Warning: saveImageWithTag() is disabled in the Siphon Sandbox');
   }
 
   /**
@@ -159,29 +148,7 @@ class CameraRoll {
    *  @param {function} errorCallback Invoked with error message on error.
    */
   static getPhotos(params, callback, errorCallback) {
-    var metaCallback = callback;
-    if (__DEV__) {
-      getPhotosParamChecker({params}, 'params', 'CameraRoll.getPhotos');
-      invariant(
-        typeof callback === 'function',
-        'CameraRoll.getPhotos callback must be a valid function.'
-      );
-      invariant(
-        typeof errorCallback === 'function',
-        'CameraRoll.getPhotos errorCallback must be a valid function.'
-      );
-    }
-    if (__DEV__) {
-      metaCallback = (response) => {
-        getPhotosReturnChecker(
-          {response},
-          'response',
-          'CameraRoll.getPhotos callback'
-        );
-        callback(response);
-      };
-    }
-    RCTCameraRollManager.getPhotos(params, metaCallback, errorCallback);
+    console.log('Warning: getPhotos() is disabled in the Siphon Sandbox');
   }
 }
 
