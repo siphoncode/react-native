@@ -92,11 +92,7 @@ class LinkingIOS {
       type === 'url',
       'LinkingIOS only supports `url` events'
     );
-    var listener = RCTDeviceEventEmitter.addListener(
-      DEVICE_NOTIF_EVENT,
-      handler
-    );
-    _notifHandlers.set(handler, listener);
+    console.log('Warning: addEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -107,12 +103,7 @@ class LinkingIOS {
       type === 'url',
       'LinkingIOS only supports `url` events'
     );
-    var listener = _notifHandlers.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _notifHandlers.delete(handler);
+    console.log('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -130,7 +121,7 @@ class LinkingIOS {
    * Determine whether or not an installed app can handle a given URL.
    * The callback function will be called with `bool supported` as the only argument
    *
-   * NOTE: As of iOS 9, your app needs to provide a `LSApplicationQueriesSchemes` key 
+   * NOTE: As of iOS 9, your app needs to provide a `LSApplicationQueriesSchemes` key
    * inside `Info.plist`.
    */
   static canOpenURL(url: string, callback: Function) {
