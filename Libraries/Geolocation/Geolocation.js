@@ -43,6 +43,9 @@ type GeoOptions = {
  *
  * `<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />`
  *
+ * Geolocation support for Android is planned but not yet open sourced. See
+ * [Known Issues](http://facebook.github.io/react-native/docs/known-issues.html#missing-modules-and-native-views).
+ *
  */
 var Geolocation = {
 
@@ -50,84 +53,98 @@ var Geolocation = {
    * Invokes the success callback once with the latest location info.  Supported
    * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool)
    */
-  getCurrentPosition: function(
-    geo_success: Function,
-    geo_error?: Function,
-    geo_options?: GeoOptions
-  ) {
-    invariant(
-      typeof geo_success === 'function',
-      'Must provide a valid geo_success callback.'
-    );
-    RCTLocationObserver.getCurrentPosition(
-      geo_options || {},
-      geo_success,
-      geo_error || logError
-    );
-  },
+   getCurrentPosition: function(
+     geo_success: Function,
+     geo_error?: Function,
+     geo_options?: GeoOptions
+   ) {
+     invariant(
+       typeof geo_success === 'function',
+       'Must provide a valid geo_success callback.'
+     );
+     console.log('Warning: getCurrentPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
+     geo_success({
+       coords: {
+         latitude: 51.500152,
+         longitude: -0.126236,
+         altitude: 55,
+         accuracy: 10,
+         altitudeAccuracy: 10,
+         heading: 0,
+         speed: 0
+       },
+       timestamp: 1301839909995
+     });
+   },
 
   /*
    * Invokes the success callback whenever the location changes.  Supported
    * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool)
    */
-  watchPosition: function(success: Function, error?: Function, options?: GeoOptions): number {
-    if (!updatesEnabled) {
-      RCTLocationObserver.startObserving(options || {});
-      updatesEnabled = true;
-    }
-    var watchID = subscriptions.length;
-    subscriptions.push([
-      RCTDeviceEventEmitter.addListener(
-        'geolocationDidChange',
-        success
-      ),
-      error ? RCTDeviceEventEmitter.addListener(
-        'geolocationError',
-        error
-      ) : null,
-    ]);
-    return watchID;
-  },
+   watchPosition: function(success: Function, error?: Function, options?: GeoOptions): number {
+     if (!updatesEnabled) {
+       //RCTLocationObserver.startObserving(options || {});
+       updatesEnabled = true;
+     }
+     var watchID = subscriptions.length;
+     subscriptions.push([null, null]);
+     console.log('Warning: watchPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
+     setTimeout(function() {
+       success({
+         coords: {
+           latitude: 51.500152,
+           longitude: -0.126236,
+           altitude: 55,
+           accuracy: 10,
+           altitudeAccuracy: 10,
+           heading: 0,
+           speed: 0
+         },
+         timestamp: 1301839909995
+       });
+     }, 50);
+     return watchID;
+   },
 
-  clearWatch: function(watchID: number) {
-    var sub = subscriptions[watchID];
-    if (!sub) {
-      // Silently exit when the watchID is invalid or already cleared
-      // This is consistent with timers
-      return;
-    }
+   clearWatch: function(watchID: number) {
+     var sub = subscriptions[watchID];
+     if (!sub) {
+       // Silently exit when the watchID is invalid or already cleared
+       // This is consistent with timers
+       return;
+     }
 
-    sub[0].remove();
-    // array element refinements not yet enabled in Flow
-    var sub1 = sub[1]; sub1 && sub1.remove();
-    subscriptions[watchID] = undefined;
-    var noWatchers = true;
-    for (var ii = 0; ii < subscriptions.length; ii++) {
-      if (subscriptions[ii]) {
-        noWatchers = false; // still valid subscriptions
-      }
-    }
-    if (noWatchers) {
-      Geolocation.stopObserving();
-    }
-  },
+     sub[0].remove();
+     // array element refinements not yet enabled in Flow
+     var sub1 = sub[1]; sub1 && sub1.remove();
+     subscriptions[watchID] = undefined;
+     var noWatchers = true;
+     for (var ii = 0; ii < subscriptions.length; ii++) {
+       if (subscriptions[ii]) {
+         noWatchers = false; // still valid subscriptions
+       }
+     }
+     if (noWatchers) {
+       Geolocation.stopObserving();
+     }
+   },
 
-  stopObserving: function() {
-    if (updatesEnabled) {
-      RCTLocationObserver.stopObserving();
-      updatesEnabled = false;
-      for (var ii = 0; ii < subscriptions.length; ii++) {
-        var sub = subscriptions[ii];
-        if (sub) {
-          warning('Called stopObserving with existing subscriptions.');
-          sub[0].remove();
-          // array element refinements not yet enabled in Flow
-          var sub1 = sub[1]; sub1 && sub1.remove();
-        }
-      }
-      subscriptions = [];
-    }
-  }
-};
+   stopObserving: function() {
+     if (updatesEnabled) {
+       //RCTLocationObserver.stopObserving();
+       updatesEnabled = false;
+       for (var ii = 0; ii < subscriptions.length; ii++) {
+         var sub = subscriptions[ii];
+         if (sub) {
+           warning('Called stopObserving with existing subscriptions.');
+           sub[0].remove();
+           // array element refinements not yet enabled in Flow
+           var sub1 = sub[1]; sub1 && sub1.remove();
+         }
+       }
+       subscriptions = [];
+     }
+   }
+ };
 
-module.exports = Geolocation;
+ module.exports = Geolocation;
