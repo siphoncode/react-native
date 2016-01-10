@@ -39,20 +39,15 @@ var NOTIF_REGISTER_EVENT = 'remoteNotificationsRegistered';
  * And then in your AppDelegate implementation add the following:
  *
  *   ```
- *    // Required to register for notifications
- *    - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
- *    {
- *     [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
- *    }
- *    // Required for the register event.
+ *   // Required for the register event.
  *    - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
  *    {
- *     [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+ *     [RCTPushNotificationManager application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
  *    }
  *    // Required for the notification event.
  *    - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
  *    {
- *     [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+ *     [RCTPushNotificationManager application:application didReceiveRemoteNotification:notification];
  *    }
  *   ```
  */
@@ -84,21 +79,21 @@ class PushNotificationIOS {
    *
    */
   static scheduleLocalNotification(details: Object) {
-    RCTPushNotificationManager.scheduleLocalNotification(details);
+    console.log('Warning: scheduleLocalNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Cancels all scheduled localNotifications
    */
   static cancelAllLocalNotifications() {
-    RCTPushNotificationManager.cancelAllLocalNotifications();
+    console.log('Warning: cancelAllLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Sets the badge number for the app icon on the home screen
    */
   static setApplicationIconBadgeNumber(number: number) {
-    RCTPushNotificationManager.setApplicationIconBadgeNumber(number);
+    console.log('Warning: setApplicationIconBadgeNumber() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -124,23 +119,7 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register',
       'PushNotificationIOS only supports `notification` and `register` events'
     );
-    var listener;
-    if (type === 'notification') {
-      listener =  RCTDeviceEventEmitter.addListener(
-        DEVICE_NOTIF_EVENT,
-        (notifData) => {
-          handler(new PushNotificationIOS(notifData));
-        }
-      );
-    } else if (type === 'register') {
-      listener = RCTDeviceEventEmitter.addListener(
-        NOTIF_REGISTER_EVENT,
-        (registrationInfo) => {
-          handler(registrationInfo.deviceToken);
-        }
-      );
-    }
-    _notifHandlers.set(handler, listener);
+    console.log('Warning: addEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -176,7 +155,7 @@ class PushNotificationIOS {
         sound: true
       };
     }
-    RCTPushNotificationManager.requestPermissions(requestedPermissions);
+    console.log('Warning: requestPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -188,7 +167,7 @@ class PushNotificationIOS {
    * the Settings app. Apps unregistered through this method can always re-register.
    */
   static abandonPermissions() {
-    RCTPushNotificationManager.abandonPermissions();
+    console.log('Warning: abandonPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -204,7 +183,7 @@ class PushNotificationIOS {
       typeof callback === 'function',
       'Must provide a valid callback'
     );
-    RCTPushNotificationManager.checkPermissions(callback);
+    console.log('Warning: checkPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -216,12 +195,7 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register',
       'PushNotificationIOS only supports `notification` and `register` events'
     );
-    var listener = _notifHandlers.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _notifHandlers.delete(handler);
+    console.log('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
 
@@ -233,14 +207,11 @@ class PushNotificationIOS {
    * notification object, or `null`. Subsequent invocations will return null.
    */
   static popInitialNotification() {
-    var initialNotification = _initialNotification &&
-      new PushNotificationIOS(_initialNotification);
-    _initialNotification = null;
-    return initialNotification;
+    console.log('Warning: popInitialNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
-   * You will never need to instantiate `PushNotificationIOS` yourself.
+   * You will never need to instansiate `PushNotificationIOS` yourself.
    * Listening to the `notification` event and invoking
    * `popInitialNotification` is sufficient
    */
