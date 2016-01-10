@@ -128,25 +128,14 @@ class CameraRoll {
    *
    *   - local URI
    *   - assets-library tag
-   *   - a tag not matching any of the above, which means the image data will
+   *   - a tag not maching any of the above, which means the image data will
    * be stored in memory (and consume memory as long as the process is alive)
    *
    * @param successCallback Invoked with the value of `tag` on success.
    * @param errorCallback Invoked with error message on error.
    */
   static saveImageWithTag(tag, successCallback, errorCallback) {
-    invariant(
-      typeof tag === 'string',
-      'CameraRoll.saveImageWithTag tag must be a valid string.'
-    );
-    RCTCameraRollManager.saveImageWithTag(
-      tag,
-      (imageTag) => {
-        successCallback && successCallback(imageTag);
-      },
-      (errorMessage) => {
-        errorCallback && errorCallback(errorMessage);
-      });
+    console.log('Warning: saveImageWithTag() is disabled in the Siphon Sandbox');
   }
 
   /**
@@ -159,29 +148,7 @@ class CameraRoll {
    *  @param {function} errorCallback Invoked with error message on error.
    */
   static getPhotos(params, callback, errorCallback) {
-    var metaCallback = callback;
-    if (__DEV__) {
-      getPhotosParamChecker({params}, 'params', 'CameraRoll.getPhotos');
-      invariant(
-        typeof callback === 'function',
-        'CameraRoll.getPhotos callback must be a valid function.'
-      );
-      invariant(
-        typeof errorCallback === 'function',
-        'CameraRoll.getPhotos errorCallback must be a valid function.'
-      );
-    }
-    if (__DEV__) {
-      metaCallback = (response) => {
-        getPhotosReturnChecker(
-          {response},
-          'response',
-          'CameraRoll.getPhotos callback'
-        );
-        callback(response);
-      };
-    }
-    RCTCameraRollManager.getPhotos(params, metaCallback, errorCallback);
+    console.log('Warning: getPhotos() is disabled in the Siphon Sandbox');
   }
 }
 
