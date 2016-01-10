@@ -153,7 +153,7 @@ const MapView = React.createClass({
        * Whether the pin drop should be animated or not
        */
       animateDrop: React.PropTypes.bool,
-      
+
       /**
        * Whether the pin should be draggable or not
        * @platform ios
@@ -163,7 +163,7 @@ const MapView = React.createClass({
       /**
        * Event that fires when the annotation drag state changes.
        * @platform ios
-       */  
+       */
       onDragStateChange: React.PropTypes.func,
 
       /**
@@ -282,6 +282,11 @@ const MapView = React.createClass({
   },
 
   render: function() {
+    if (this.props.showsUserLocation) {
+      console.log('MapView.showsUserLocation is disabled in the Siphon Sandbox.');
+      this.props.showsUserLocation = false;
+    }
+
     let children = [], {annotations, overlays} = this.props;
     annotations = annotations && annotations.map((annotation: Object) => {
       let {
@@ -330,18 +335,18 @@ const MapView = React.createClass({
           style: [styles.calloutView, detailCalloutView.props.style || {}]
         }));
       }
-      if (__DEV__) {
-        ['hasLeftCallout', 'onLeftCalloutPress'].forEach(key => {
-          if (annotation[key]) {
-            console.warn('`' + key + '` is deprecated. Use leftCalloutView instead.');
-          }
-        });
-        ['hasRightCallout', 'onRightCalloutPress'].forEach(key => {
-          if (annotation[key]) {
-            console.warn('`' + key + '` is deprecated. Use rightCalloutView instead.');
-          }
-        });
-      }
+
+      ['hasLeftCallout', 'onLeftCalloutPress'].forEach(key => {
+        if (annotation[key]) {
+          console.warn('`' + key + '` is deprecated. Use leftCalloutView instead.');
+        }
+      });
+      ['hasRightCallout', 'onRightCalloutPress'].forEach(key => {
+        if (annotation[key]) {
+          console.warn('`' + key + '` is deprecated. Use rightCalloutView instead.');
+        }
+      });
+
       let result = {
         ...annotation,
         tintColor: tintColor && processColor(tintColor),
