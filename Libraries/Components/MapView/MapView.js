@@ -311,6 +311,11 @@ const MapView = React.createClass({
   },
 
   render: function() {
+    if (this.props.showsUserLocation) {
+      console.log('MapView.showsUserLocation is disabled in the Siphon Sandbox.');
+      this.props.showsUserLocation = false;
+    }
+
     let children = [], {annotations, overlays, followUserLocation} = this.props;
     annotations = annotations && annotations.map((annotation: Object) => {
       let {
