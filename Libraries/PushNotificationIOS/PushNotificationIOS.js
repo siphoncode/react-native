@@ -101,21 +101,21 @@ class PushNotificationIOS {
    * - `userInfo` : An optional object containing additional notification data.
    */
   static scheduleLocalNotification(details: Object) {
-    RCTPushNotificationManager.scheduleLocalNotification(details);
+    console.log('Warning: scheduleLocalNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Cancels all scheduled localNotifications
    */
   static cancelAllLocalNotifications() {
-    RCTPushNotificationManager.cancelAllLocalNotifications();
+    console.log('Warning: cancelAllLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Sets the badge number for the app icon on the home screen
    */
   static setApplicationIconBadgeNumber(number: number) {
-    RCTPushNotificationManager.setApplicationIconBadgeNumber(number);
+    console.log('Warning: setApplicationIconBadgeNumber() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -133,7 +133,7 @@ class PushNotificationIOS {
    * in the `userInfo` argument.
    */
   static cancelLocalNotifications(userInfo: Object) {
-    RCTPushNotificationManager.cancelLocalNotifications(userInfo);
+    console.log('Warning: cancelLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -147,36 +147,13 @@ class PushNotificationIOS {
    * - `register`: Fired when the user registers for remote notifications. The
    *   handler will be invoked with a hex string representing the deviceToken.
    */
-  static addEventListener(type: string, handler: Function) {
-    invariant(
-      type === 'notification' || type === 'register' || type === 'localNotification',
-      'PushNotificationIOS only supports `notification`, `register` and `localNotification` events'
-    );
-    var listener;
-    if (type === 'notification') {
-      listener =  RCTDeviceEventEmitter.addListener(
-        DEVICE_NOTIF_EVENT,
-        (notifData) => {
-          handler(new PushNotificationIOS(notifData));
-        }
-      );
-    } else if (type === 'localNotification') {
-      listener = RCTDeviceEventEmitter.addListener(
-        DEVICE_LOCAL_NOTIF_EVENT,
-        (notifData) => {
-          handler(new PushNotificationIOS(notifData));
-        }
-      );
-    } else if (type === 'register') {
-      listener = RCTDeviceEventEmitter.addListener(
-        NOTIF_REGISTER_EVENT,
-        (registrationInfo) => {
-          handler(registrationInfo.deviceToken);
-        }
-      );
-    }
-    _notifHandlers.set(handler, listener);
-  }
+   static addEventListener(type: string, handler: Function) {
+     invariant(
+       type === 'notification' || type === 'register',
+       'PushNotificationIOS only supports `notification` and `register` events'
+     );
+     console.log('Warning: addEventListener() is disabled in the Siphon Sandbox.');
+   }
 
   /**
    * Requests notification permissions from iOS, prompting the user's
@@ -211,7 +188,7 @@ class PushNotificationIOS {
         sound: true
       };
     }
-    RCTPushNotificationManager.requestPermissions(requestedPermissions);
+    console.log('Warning: requestPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -223,7 +200,7 @@ class PushNotificationIOS {
    * the Settings app. Apps unregistered through this method can always re-register.
    */
   static abandonPermissions() {
-    RCTPushNotificationManager.abandonPermissions();
+    console.log('Warning: abandonPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -239,7 +216,7 @@ class PushNotificationIOS {
       typeof callback === 'function',
       'Must provide a valid callback'
     );
-    RCTPushNotificationManager.checkPermissions(callback);
+    console.log('Warning: checkPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -251,14 +228,8 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register' || type === 'localNotification',
       'PushNotificationIOS only supports `notification`, `register` and `localNotification` events'
     );
-    var listener = _notifHandlers.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _notifHandlers.delete(handler);
+    console.log('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
   }
-
 
   /**
    * An initial notification will be available if the app was cold-launched
@@ -268,10 +239,7 @@ class PushNotificationIOS {
    * notification object, or `null`. Subsequent invocations will return null.
    */
   static popInitialNotification() {
-    var initialNotification = _initialNotification &&
-      new PushNotificationIOS(_initialNotification);
-    _initialNotification = null;
-    return initialNotification;
+    console.log('Warning: popInitialNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
