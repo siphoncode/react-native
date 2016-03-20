@@ -264,7 +264,7 @@ class ResolutionRequest {
     } else {
       return this._redirectRequire(fromModule, toModuleName).then(
         realModuleName => {
-          const searchQueue = [];
+          const searchQueue = [path.join(__dirname, '../../../../../../', realModuleName)];
           for (let currDir = path.dirname(fromModule.path);
                currDir !== path.parse(fromModule.path).root;
                currDir = path.dirname(currDir)) {
