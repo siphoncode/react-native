@@ -46,6 +46,13 @@ class WebSocketBase extends EventTarget {
     this.CLOSING = CLOSING;
     this.CLOSED = CLOSED;
 
+    if (!url.startsWith('wss') && !url.startsWith('ws://localhost')) {
+      throw new Error('Siphon: non-wss websocket requests are ' +
+      'disabled for security reasons. Unfortunately this is a limitation ' +
+      'imposed by Apple. Please make sure any websockets you try to access ' +
+      'are prefixed with wss:// and not ws:// otherwise they will fail');
+    }
+
     if (typeof protocols === 'string') {
       protocols = [protocols];
     }
