@@ -221,6 +221,14 @@ class XMLHttpRequestBase {
       // async is default
       throw new Error('Synchronous http requests are not supported');
     }
+
+    if (!url.startsWith('https') && !url.startsWith('http://localhost')) {
+      throw new Error('Siphon: non-https requests are ' +
+      'disabled for security reasons. Unfortunately this is a limitation ' +
+      'imposed by Apple. Please make sure any resources you try to access ' +
+      'are prefixed with https:// and not http:// otherwise they will fail');
+    }
+
     if (!url) {
       throw new Error('Cannot load an empty url');
     }
