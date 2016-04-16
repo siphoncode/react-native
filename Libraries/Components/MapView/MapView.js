@@ -312,7 +312,7 @@ const MapView = React.createClass({
 
   render: function() {
     if (this.props.showsUserLocation) {
-      console.log('MapView.showsUserLocation is disabled in the Siphon Sandbox.');
+      console.warn('MapView.showsUserLocation is disabled in the Siphon Sandbox.');
       this.props.showsUserLocation = false;
     }
 

@@ -101,21 +101,21 @@ class PushNotificationIOS {
    * - `userInfo` : An optional object containing additional notification data.
    */
   static scheduleLocalNotification(details: Object) {
-    console.log('Warning: scheduleLocalNotification() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: scheduleLocalNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Cancels all scheduled localNotifications
    */
   static cancelAllLocalNotifications() {
-    console.log('Warning: cancelAllLocalNotifications() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: cancelAllLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
    * Sets the badge number for the app icon on the home screen
    */
   static setApplicationIconBadgeNumber(number: number) {
-    console.log('Warning: setApplicationIconBadgeNumber() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: setApplicationIconBadgeNumber() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -133,7 +133,7 @@ class PushNotificationIOS {
    * in the `userInfo` argument.
    */
   static cancelLocalNotifications(userInfo: Object) {
-    console.log('Warning: cancelLocalNotifications() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: cancelLocalNotifications() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -152,7 +152,7 @@ class PushNotificationIOS {
        type === 'notification' || type === 'register',
        'PushNotificationIOS only supports `notification` and `register` events'
      );
-     console.log('Warning: addEventListener() is disabled in the Siphon Sandbox.');
+     console.warn('Warning: addEventListener() is disabled in the Siphon Sandbox.');
    }
 
   /**
@@ -188,7 +188,7 @@ class PushNotificationIOS {
         sound: true
       };
     }
-    console.log('Warning: requestPermissions() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: requestPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -200,7 +200,7 @@ class PushNotificationIOS {
    * the Settings app. Apps unregistered through this method can always re-register.
    */
   static abandonPermissions() {
-    console.log('Warning: abandonPermissions() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: abandonPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -216,7 +216,7 @@ class PushNotificationIOS {
       typeof callback === 'function',
       'Must provide a valid callback'
     );
-    console.log('Warning: checkPermissions() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: checkPermissions() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -228,7 +228,7 @@ class PushNotificationIOS {
       type === 'notification' || type === 'register' || type === 'localNotification',
       'PushNotificationIOS only supports `notification`, `register` and `localNotification` events'
     );
-    console.log('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -239,7 +239,7 @@ class PushNotificationIOS {
    * notification object, or `null`. Subsequent invocations will return null.
    */
   static popInitialNotification() {
-    console.log('Warning: popInitialNotification() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: popInitialNotification() is disabled in the Siphon Sandbox.');
   }
 
   /**

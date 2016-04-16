@@ -130,7 +130,7 @@ class CameraRoll {
    * Returns a Promise which when resolved will be passed the new URI.
    */
   static saveImageWithTag(tag) {
-    console.log('Warning: saveImageWithTag() is disabled in the Siphon Sandbox');
+    console.warn('Warning: saveImageWithTag() is disabled in the Siphon Sandbox');
   }
 
   /**
@@ -142,7 +142,7 @@ class CameraRoll {
    * Returns a Promise which when resolved will be of shape `getPhotosReturnChecker`.
    */
   static getPhotos(params) {
-    console.log('Warning: getPhotos() is disabled in the Siphon Sandbox');
+    console.warn('Warning: getPhotos() is disabled in the Siphon Sandbox');
   }
 }
 

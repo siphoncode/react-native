@@ -60,7 +60,7 @@ var Geolocation = {
       typeof geo_success === 'function',
       'Must provide a valid geo_success callback.'
     );
-    console.log('Warning: getCurrentPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
+    console.warn('Warning: getCurrentPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
     geo_success({
       coords: {
         latitude: 51.500152,
@@ -84,10 +84,10 @@ var Geolocation = {
       //RCTLocationObserver.startObserving(options || {});
       updatesEnabled = true;
     }
-    
+
     var watchID = subscriptions.length;
     subscriptions.push([null, null]);
-    console.log('Warning: watchPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
+    console.warn('Warning: watchPosition() always returns fake GPS coordinates in the Siphon Sandbox.');
     setTimeout(function() {
       success({
         coords: {

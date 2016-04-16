@@ -101,7 +101,7 @@ class LinkingIOS {
    */
   static addEventListener(type: string, handler: Function) {
     console.warn('"LinkingIOS.addEventListener" is deprecated. Use "Linking.addEventListener" instead.');
-    console.log('Warning: addEventListener() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: addEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
@@ -111,7 +111,7 @@ class LinkingIOS {
    */
   static removeEventListener(type: string, handler: Function ) {
     console.warn('"LinkingIOS.removeEventListener" is deprecated. Use "Linking.removeEventListener" instead.');
-    console.log('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
+    console.warn('Warning: removeEventListener() is disabled in the Siphon Sandbox.');
   }
 
   /**
