@@ -77,7 +77,11 @@ function getPathInArchive(asset) {
   if (Platform.OS === 'android') {
     if (offlinePath) {
       // E.g. 'file:///sdcard/AwesomeModule/drawable-mdpi/icon.png'
-      return 'file://' + offlinePath + getAssetPathInDrawableFolder(asset);
+      //return 'file://' + offlinePath + getAssetPathInDrawableFolder(asset);
+
+      // Standard React Native does some horrible things to the path here,
+      // so we patch it to return the normal image path.
+      return asset.files[0];
     }
     // E.g. 'assets_awesomemodule_icon'
     // The Android resource system picks the correct scale.
