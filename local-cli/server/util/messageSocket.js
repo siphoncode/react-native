@@ -8,7 +8,6 @@
  */
 'use strict';
 
-
 function attachToServer(server, path) {
   var WebSocketServer = require('ws').Server;
   var wss = new WebSocketServer({
@@ -24,14 +23,15 @@ function attachToServer(server, path) {
 
     try {
       dest.send(message);
-    } catch(e) {
+    } catch (e) {
       console.warn(e);
       // Sometimes this call throws 'not opened'
     }
   }
 
-  wss.on('connection', function(ws) {
-    const {url} = ws.upgradeReq;
+  wss.on('connection', function (ws) {
+    var url = ws.upgradeReq.url;
+
 
     if (url.indexOf('role=interface') > -1) {
       if (interfaceSocket) {
@@ -39,16 +39,17 @@ function attachToServer(server, path) {
         return;
       }
       interfaceSocket = ws;
-      interfaceSocket.onerror =
-      interfaceSocket.onclose = () => {
+      interfaceSocket.onerror = interfaceSocket.onclose = function () {
         interfaceSocket = null;
         // if (shellSocket) {
         //   shellSocket.close(1011, 'Interface was disconnected');
         // }
       };
 
-      interfaceSocket.onmessage = ({data}) => {
-        send(shellSocket, data)
+      interfaceSocket.onmessage = function (_ref) {
+        var data = _ref.data;
+
+        send(shellSocket, data);
       };
     } else if (url.indexOf('role=shell') > -1) {
       if (shellSocket) {
@@ -56,12 +57,14 @@ function attachToServer(server, path) {
         shellSocket.close(1011, 'Another client connected');
       }
       shellSocket = ws;
-      shellSocket.onerror =
-      shellSocket.onclose = () => {
+      shellSocket.onerror = shellSocket.onclose = function () {
         shellSocket = null;
-        send(interfaceSocket, JSON.stringify({method: '$disconnected'}));
+        send(interfaceSocket, JSON.stringify({ method: '$disconnected' }));
       };
-      shellSocket.onmessage = ({data}) => send(interfaceSocket, data);
+      shellSocket.onmessage = function (_ref2) {
+        var data = _ref2.data;
+        return send(interfaceSocket, data);
+      };
 
       // console.log('CLIENT ----');
       // if (doIt) {
@@ -69,15 +72,14 @@ function attachToServer(server, path) {
       //   send(shellSocket, str);
       //   console.log('< sending');
       // }
-
     } else {
-      ws.close(1011, 'Missing role param');
-    }
+        ws.close(1011, 'Missing role param');
+      }
   });
 
   return {
     server: wss,
-    isChromeConnected: function() {
+    isChromeConnected: function isChromeConnected() {
       return !!interfaceSocket;
     }
   };
