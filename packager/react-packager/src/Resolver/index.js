@@ -86,19 +86,6 @@ class Resolver {
       providesModuleNodeModules: [
         'react',
         'react-native',
-        'react-native-camera',
-        'react-native-fs',
-        'react-native-material-kit',
-        'react-native-linear-gradient',
-        'react-native-touch-id',
-        'react-native-video',
-        'react-native-youtube',
-        'react-native-grid-view',
-        'react-native-vector-icons',
-        'superagent',
-        'underscore',
-        'react-native-motion-manager',
-
         // Parse requires AsyncStorage. They will
         // change that to require('react-native') which
         // should work after this release and we can
