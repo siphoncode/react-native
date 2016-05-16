@@ -12,6 +12,7 @@
 
 const babel = require('babel-core');
 const externalHelpersPlugin = require('babel-plugin-external-helpers');
+const decoratorsPlugin = require('babel-plugin-transform-decorators-legacy').default;
 const fs = require('fs');
 const makeHMRConfig = require('babel-preset-react-native/configs/hmr');
 const resolvePlugins = require('babel-preset-react-native/lib/resolvePlugins');
@@ -80,6 +81,8 @@ function buildBabelConfig(filename, options) {
 
   // Add extra plugins
   const extraPlugins = [externalHelpersPlugin];
+
+  extraPlugins.push(decoratorsPlugin);
 
   if (options.inlineRequires) {
     extraPlugins.push(inlineRequiresPlugin);
